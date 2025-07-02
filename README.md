@@ -1,4 +1,4 @@
-# 🚆 Railway Management System (IRCTC Clone)
+# 🚆 Railway Management System 
 
 A full-stack **Spring Boot** application that simulates an IRCTC-like railway reservation system, allowing users to register, log in, check train availability, and book tickets. The system supports **admin operations**, **role-based access**, **JWT authentication**, and **API key protection**.
 
@@ -111,3 +111,73 @@ railway-management/
 | POST   | /api/bookings/book       | User            | Book a seat                 |
 | GET    | /api/bookings/{id}       | User            | Get booking info            |
 | POST   | /api/admin/add-train     | Admin + API Key | Add new train               |
+
+
+## ⚙️ Setup & Run Instructions
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/railway-management.git
+cd railway-management
+```
+
+### 2. Configure `application.properties`
+
+Create the file at `src/main/resources/application.properties`:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/railway_db
+spring.datasource.username=your_db_username
+spring.datasource.password=your_db_password
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+admin.api.key=your_admin_api_key
+jwt.secret=your_jwt_secret
+```
+
+> ⚠️ **Important:** Do **NOT** commit this file to GitHub. Use `application-example.properties` for sharing safe defaults.
+
+---
+
+### 3. Run the Application
+
+Run using Gradle:
+
+```bash
+./gradlew bootRun
+```
+
+Or run directly from your IDE using `RailwayManagementApplication.java`.
+
+---
+
+### 4. Test the API
+
+Use tools like **Postman** or `curl`.
+
+- Pass **JWT token** in the `Authorization` header:  
+  `Authorization: Bearer <your_token>`
+  
+- For **Admin APIs**, also include the API key:  
+  `API-Key: your_admin_api_key`
+
+---
+
+## 📝 Notes
+
+- All **Admin APIs** require both:
+  - a valid API key  
+  - user with `ROLE_ADMIN` authority
+- Booking operations use **transactional pessimistic locking** to prevent race conditions during high-concurrency seat booking.
+
+---
+
+## 👤 Author
+
+**Palak Bais**  
+📧 Email: [pallak.bbais@gmail.com](mailto:pallak.bbais@gmail.com)  
+🔗 LinkedIn: [linkedin.com/in/palak-bais](https://linkedin.com/in/palak-bais)  
+💻 GitHub: [github.com/pal-ak](https://github.com/pal-ak)
